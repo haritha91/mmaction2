@@ -74,9 +74,9 @@ def generate_rawframes_filelist():
         for k in validation
     ]
 
-    with open(osp.join(data_file, 'anet_train_video.txt'), 'w') as fout:
+    with open(osp.join(data_file, 'nnet_train_video.txt'), 'w') as fout:
         fout.write('\n'.join(train_lines))
-    with open(osp.join(data_file, 'anet_val_video.txt'), 'w') as fout:
+    with open(osp.join(data_file, 'nnet_val_video.txt'), 'w') as fout:
         fout.write('\n'.join(val_lines))
 
     def clip_list(k, anno, video_anno):
@@ -102,9 +102,9 @@ def generate_rawframes_filelist():
     for k in validation:
         val_clips.extend(clip_list(k, database[key_dict[k]], validation[k]))
 
-    with open(osp.join(data_file, 'anet_train_clip.txt'), 'w') as fout:
+    with open(osp.join(data_file, 'nnet_train_clip.txt'), 'w') as fout:
         fout.write('\n'.join(train_clips))
-    with open(osp.join(data_file, 'anet_val_clip.txt'), 'w') as fout:
+    with open(osp.join(data_file, 'nnet_val_clip.txt'), 'w') as fout:
         fout.write('\n'.join(val_clips))
 
 
