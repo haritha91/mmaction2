@@ -11,9 +11,9 @@ def load_json(file):
         return data
 
 
-data_file = '../../../data/ActivityNet'
-info_file = f'{data_file}/video_info_new.csv'
-ann_file = f'{data_file}/anet_anno_action.json'
+data_file = '../../../data/NetballNet'
+info_file = f'{data_file}/video_info.csv'
+ann_file = f'{data_file}/nnet_anno_action.json'
 
 anno_database = load_json(ann_file)
 
@@ -40,14 +40,14 @@ for i in range(len(video_record)):
 
 print(f'full subset video numbers: {len(video_record)}')
 
-with open(f'{data_file}/anet_anno_train.json', 'w') as result_file:
+with open(f'{data_file}/nnet_anno_train.json', 'w') as result_file:
     json.dump(video_dict_train, result_file)
 
-with open(f'{data_file}/anet_anno_val.json', 'w') as result_file:
+with open(f'{data_file}/nnet_anno_val.json', 'w') as result_file:
     json.dump(video_dict_val, result_file)
 
-with open(f'{data_file}/anet_anno_test.json', 'w') as result_file:
+with open(f'{data_file}/nnet_anno_test.json', 'w') as result_file:
     json.dump(video_dict_test, result_file)
 
-with open(f'{data_file}/anet_anno_full.json', 'w') as result_file:
+with open(f'{data_file}/nnet_anno_full.json', 'w') as result_file:
     json.dump(video_dict_full, result_file)
