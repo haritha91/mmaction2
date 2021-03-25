@@ -4,11 +4,11 @@ _base_ = [
 
 # dataset settings
 dataset_type = 'ActivityNetDataset'
-data_root = 'data/ActivityNet/activitynet_feature_cuhk/csv_mean_100/'
-data_root_val = 'data/ActivityNet/activitynet_feature_cuhk/csv_mean_100/'
-ann_file_train = 'data/ActivityNet/anet_anno_train.json'
-ann_file_val = 'data/ActivityNet/anet_anno_val.json'
-ann_file_test = 'data/ActivityNet/anet_anno_val.json'
+data_root = 'data/NetballNet/netballnet_feature_cuhk/csv_mean_100/'
+data_root_val = 'data/NetballNet/netballnet_feature_cuhk/csv_mean_100/'
+ann_file_train = 'data/NetballNet/nnet_anno_train.json'
+ann_file_val = 'data/NetballNet/nnet_anno_val.json'
+ann_file_test = 'data/NetballNet/nnet_anno_val.json'
 
 test_pipeline = [
     dict(type='LoadLocalizationFeature'),
