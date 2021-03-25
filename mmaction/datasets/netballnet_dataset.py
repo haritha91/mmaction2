@@ -13,8 +13,8 @@ from .registry import DATASETS
 
 
 @DATASETS.register_module()
-class ActivityNetDataset(BaseDataset):
-    """ActivityNet dataset for temporal action localization.
+class NetballNetDataset(BaseDataset):
+    """NetballNet dataset for temporal action localization.
 
     The dataset loads raw features and apply specified transforms to return a
     dict containing the frame tensors and other information.
@@ -159,7 +159,7 @@ class ActivityNetDataset(BaseDataset):
             proposals[video_id] = np.array(this_video_proposals)
         return proposals, num_proposals
 
-    def dump_results(self, results, out, output_format, version='VERSION 1.3'):
+    def dump_results(self, results, out, output_format, version='VERSION 1.0'):
         """Dump data to json/csv files."""
         if output_format == 'json':
             result_dict = self.proposals2json(results)
