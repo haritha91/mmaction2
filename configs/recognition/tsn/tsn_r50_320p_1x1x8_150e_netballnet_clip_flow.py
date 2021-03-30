@@ -3,15 +3,15 @@ _base_ = ['../../_base_/models/tsn_r50.py', '../../_base_/default_runtime.py']
 # model settings
 model = dict(
     backbone=dict(in_channels=10),
-    cls_head=dict(num_classes=200, dropout_ratio=0.8))
+    cls_head=dict(num_classes=5, dropout_ratio=0.8))
 
 # dataset settings
 dataset_type = 'RawframeDataset'
-data_root = 'data/ActivityNet/rawframes'
-data_root_val = 'data/ActivityNet/rawframes'
-ann_file_train = 'data/ActivityNet/anet_train_clip.txt'
-ann_file_val = 'data/ActivityNet/anet_val_clip.txt'
-ann_file_test = 'data/ActivityNet/anet_val_clip.txt'
+data_root = 'data/NetballNet/rawframes'
+data_root_val = 'data/NetballNet/rawframes'
+ann_file_train = 'data/NetballNet/nnet_train_clip.txt'
+ann_file_val = 'data/NetballNet/nnet_val_clip.txt'
+ann_file_test = 'data/NetballNet/nnet_val_clip.txt'
 img_norm_cfg = dict(mean=[128, 128], std=[128, 128], to_bgr=False)
 train_pipeline = [
     dict(type='SampleFrames', clip_len=5, frame_interval=1, num_clips=8),

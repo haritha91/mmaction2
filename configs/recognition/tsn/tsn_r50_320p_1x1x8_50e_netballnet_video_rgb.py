@@ -3,15 +3,15 @@ _base_ = [
     '../../_base_/default_runtime.py'
 ]
 # model settings
-model = dict(cls_head=dict(num_classes=200, dropout_ratio=0.8))
+model = dict(cls_head=dict(num_classes=5, dropout_ratio=0.8))
 
 # dataset settings
 dataset_type = 'RawframeDataset'
-data_root = 'data/ActivityNet/rawframes'
-data_root_val = 'data/ActivityNet/rawframes'
-ann_file_train = 'data/ActivityNet/anet_train_video.txt'
-ann_file_val = 'data/ActivityNet/anet_val_video.txt'
-ann_file_test = 'data/ActivityNet/anet_val_video.txt'
+data_root = 'data/NetballNet/rawframes'
+data_root_val = 'data/NetballNet/rawframes'
+ann_file_train = 'data/NetballNet/nnet_train_video.txt'
+ann_file_val = 'data/NetballNet/nnet_val_video.txt'
+ann_file_test = 'data/NetballNet/nnet_val_video.txt'
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_bgr=False)
 train_pipeline = [
