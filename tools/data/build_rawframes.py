@@ -54,7 +54,7 @@ def extract_frame(vid_item):
                             new_h = int((new_w / w) * h)
                         out_img = mmcv.imresize(vr[i], (new_h, new_w))
                     mmcv.imwrite(out_img,
-                                 f'{out_full_path}/img_{i + 1:05d}.jpg')
+                                 f'{out_full_path}/image_{i + 1:05d}.jpg')
                 else:
                     warnings.warn(
                         'Length inconsistent!'
