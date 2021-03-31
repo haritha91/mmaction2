@@ -9,9 +9,9 @@ model = dict(cls_head=dict(num_classes=5, dropout_ratio=0.8))
 dataset_type = 'ActivityNetDataset'
 data_root = 'data/NetballNet/rawframes'
 data_root_val = 'data/NetballNet/rawframes'
-ann_file_train = 'data/NetballNet/nnet_train_video.txt'
-ann_file_val = 'data/NetballNet/nnet_val_video.txt'
-ann_file_test = 'data/NetballNet/nnet_val_video.txt'
+ann_file_train = 'data/NetballNet/nnet_anno_train.json'
+ann_file_val = 'data/NetballNet/nnet_anno_val.json'
+ann_file_test = 'data/NetballNet/nnet_anno_val.json'
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_bgr=False)
 train_pipeline = [
