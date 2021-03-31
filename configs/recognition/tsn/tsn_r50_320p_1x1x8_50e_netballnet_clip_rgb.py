@@ -6,7 +6,7 @@ _base_ = [
 model = dict(cls_head=dict(num_classes=5, dropout_ratio=0.8))
 
 # dataset settings
-dataset_type = 'NetballNetDataset'
+dataset_type = 'ActivityNetDataset'
 data_root = 'data/NetballNet/rawframes'
 data_root_val = 'data/NetballNet/rawframes'
 ann_file_train = 'data/NetballNet/nnet_train_clip.txt'
