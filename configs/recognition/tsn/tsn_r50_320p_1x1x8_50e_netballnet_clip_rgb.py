@@ -92,7 +92,7 @@ evaluation = dict(
 optimizer = dict(type='SGD', lr=0.001, momentum=0.9, weight_decay=0.0001)
 
 # runtime settings
-work_dir = './work_dirs/tsn_r50_320p_1x1x8_50e_activitynet_clip_rgb/'
+work_dir = './work_dirs/tsn_r50_320p_1x1x8_50e_netballnet_clip_rgb/'
 load_from = ('https://download.openmmlab.com/mmaction/recognition/tsn/'
              'tsn_r50_320p_1x1x8_100e_kinetics400_rgb/'
              'tsn_r50_320p_1x1x8_100e_kinetics400_rgb_20200702-ef80e3d7.pth')

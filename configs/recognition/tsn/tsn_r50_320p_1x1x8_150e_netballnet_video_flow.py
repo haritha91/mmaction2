@@ -98,7 +98,7 @@ total_epochs = 150
 
 # runtime settings
 checkpoint_config = dict(interval=5)
-work_dir = './work_dirs/tsn_r50_320p_1x1x8_150e_activitynet_video_flow/'
+work_dir = './work_dirs/tsn_r50_320p_1x1x8_150e_netballnet_video_flow/'
 load_from = ('https://download.openmmlab.com/mmaction/recognition/tsn/'
              'tsn_r50_320p_1x1x8_110e_kinetics400_flow/'
              'tsn_r50_320p_1x1x8_110e_kinetics400_flow_20200705-1f39486b.pth')
