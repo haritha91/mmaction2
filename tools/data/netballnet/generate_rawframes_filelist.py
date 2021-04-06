@@ -1,11 +1,13 @@
 import json
 import os
+import csv
 import os.path as osp
 
 data_file = '../../../data/NetballNet'
 video_list = f'{data_file}/video_info.csv'
 anno_file = f'{data_file}/nnet_anno_action.json'
 rawframe_dir = f'{data_file}/rawframes'
+video_info_file = f'{data_file}/video_info.csv'
 action_name_list = 'action_name.csv'
 
 train_rawframe_dir = rawframe_dir
@@ -13,8 +15,28 @@ val_rawframe_dir = rawframe_dir
 
 json_file = f'{data_file}/netball_net_v1.json'
 
+#read video info csv
+with open(video_info_file) as csv_file:
+    csv_reader = csv.reader(csv_file)
+    next(csv_reader)
+    video_info_data = list(csv_reader)
+csv_file.close()
+
+frame_count_dict = []
+for entry in video_info_data:
+    single_entry = {
+        'video_name' : entry[0] ,
+        'num_frames' : int(entry[1])
+    }
+    frame_count_dict.append(single_entry)
 
 def generate_rawframes_filelist():
+
+    def get_frame_count(video_name):
+        for item in frame_count_dict:
+            if item['video_name'] == video_name:
+                return item['num_frames']
+
     load_dict = json.load(open(json_file))
 
     anet_labels = open(action_name_list).readlines()
@@ -34,7 +56,9 @@ def generate_rawframes_filelist():
     def count_frames(dir_list, video):
         for dir_name in dir_list:
             if video in dir_name:
-                return osp.basename(dir_name), len(os.listdir(dir_name))
+                video_name = video.split('/')[-1]
+                return osp.basename(dir_name), get_frame_count(video_name)
+                # return osp.basename(dir_name), len(os.listdir(dir_name))
         return None, None
 
     database = load_dict['database']
