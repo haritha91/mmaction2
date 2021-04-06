@@ -68,7 +68,7 @@ data = dict(
         pipeline=train_pipeline,
         with_offset=True,
         start_index=0,
-        filename_tmpl='image_{:05d}.jpg'),
+        filename_tmpl='img_{:05d}.jpg'),
     val=dict(
         type=dataset_type,
         ann_file=ann_file_val,
@@ -76,7 +76,7 @@ data = dict(
         pipeline=val_pipeline,
         with_offset=True,
         start_index=0,
-        filename_tmpl='image_{:05d}.jpg'),
+        filename_tmpl='img_{:05d}.jpg'),
     test=dict(
         type=dataset_type,
         ann_file=ann_file_test,
@@ -84,7 +84,7 @@ data = dict(
         pipeline=test_pipeline,
         with_offset=True,
         start_index=0,
-        filename_tmpl='image_{:05d}.jpg'))
+        filename_tmpl='img_{:05d}.jpg'))
 evaluation = dict(
     interval=5, metrics=['top_k_accuracy', 'mean_class_accuracy'])
 
