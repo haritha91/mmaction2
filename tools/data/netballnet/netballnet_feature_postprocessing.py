@@ -76,7 +76,7 @@ def merge_feat(name):
     elif args.output_format == 'csv':
         feat = feat.tolist()
         lines = []
-        line0 = ','.join([f'f{i}' for i in range(10)])
+        line0 = ','.join([f'f{i}' for i in range(400)])
         lines.append(line0)
         for line in feat:
             lines.append(','.join([f'{x:.4f}' for x in line]))
