@@ -11,7 +11,7 @@ args = None
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='ANet Feature Prepare')
+    parser = argparse.ArgumentParser(description='NNet Feature Prepare')
     parser.add_argument('--rgb', default='', help='rgb feature root')
     parser.add_argument('--flow', default='', help='flow feature root')
     parser.add_argument('--dest', default='', help='dest root')
@@ -76,7 +76,7 @@ def merge_feat(name):
     elif args.output_format == 'csv':
         feat = feat.tolist()
         lines = []
-        line0 = ','.join([f'f{i}' for i in range(400)])
+        line0 = ','.join([f'f{i}' for i in range(10)])
         lines.append(line0)
         for line in feat:
             lines.append(','.join([f'{x:.4f}' for x in line]))
