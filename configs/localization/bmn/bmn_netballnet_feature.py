@@ -3,12 +3,12 @@ _base_ = [
 ]
 
 # dataset settings
-dataset_type = 'RawframeDataset'
+dataset_type = 'ActivityNetDataset'
 data_root = 'data/NetballNet/mmaction_feat/'
 data_root_val = 'data/NetballNet/mmaction_feat/'
-ann_file_train = 'data/NetballNet/nnet_train_video.txt'
-ann_file_val = 'data/NetballNet/nnet_val_video.txt'
-ann_file_test = 'data/NetballNet/nnet_val_video.txt'
+ann_file_train = 'data/NetballNet/nnet_anno_train.json'
+ann_file_val = 'data/NetballNet/nnet_anno_val.json'
+ann_file_test = 'data/NetballNet/nnet_anno_val.json'
 
 test_pipeline = [
     dict(type='LoadLocalizationFeature'),
