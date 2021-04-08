@@ -3,12 +3,12 @@ _base_ = [
 ]
 
 # dataset settings
-dataset_type = 'ActivityNetDataset'
-data_root = 'data/NetballNet/netballnet_feature_cuhk/csv_mean_100/'
-data_root_val = 'data/NetballNet/netballnet_feature_cuhk/csv_mean_100/'
-ann_file_train = 'data/NetballNet/nnet_anno_train.json'
-ann_file_val = 'data/NetballNet/nnet_anno_val.json'
-ann_file_test = 'data/NetballNet/nnet_anno_val.json'
+dataset_type = 'RawframeDataset'
+data_root = 'data/NetballNet/mmaction_feat/'
+data_root_val = 'data/NetballNet/mmaction_feat/'
+ann_file_train = 'data/NetballNet/nnet_train_video.txt'
+ann_file_val = 'data/NetballNet/nnet_val_video.txt'
+ann_file_test = 'data/NetballNet/nnet_val_video.txt'
 
 test_pipeline = [
     dict(type='LoadLocalizationFeature'),
@@ -84,5 +84,5 @@ total_epochs = 9
 
 # runtime settings
 log_config = dict(interval=50, hooks=[dict(type='TextLoggerHook')])
-work_dir = './work_dirs/bmn_400x100_2x8_9e_activitynet_feature'
+work_dir = './work_dirs/bmn_400x100_2x8_9e_netballnet_feature'
 output_config = dict(out=f'{work_dir}_results.json', output_format='json')
