@@ -109,7 +109,8 @@ def parse_args():
     parser.add_argument(
         '--activity-index-file',
         type=str,
-        default='../../../data/ActivityNet/anet_activity_indexes_val.txt',
+        # default='../../../data/ActivityNet/anet_activity_indexes_val.txt',
+        default='data/ActivityNet/anet_activity_indexes_val.txt',
         help='name of activity index file')
     parser.add_argument(
         '--proposal-file',
