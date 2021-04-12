@@ -104,7 +104,8 @@ def parse_args():
     parser.add_argument(
         '--ann-file',
         type=str,
-        default='../../../data/ActivityNet/anet_anno_val.json',
+        # default='../../../data/ActivityNet/anet_anno_val.json',
+        default='data/ActivityNet/anet_anno_val.json',
         help='name of annotation file')
     parser.add_argument(
         '--activity-index-file',
