@@ -3,7 +3,7 @@ _base_ = ['../../_base_/models/tsn_r50.py', '../../_base_/default_runtime.py']
 # model settings
 model = dict(
     backbone=dict(in_channels=10),
-    cls_head=dict(num_classes=5, dropout_ratio=0.8))
+    cls_head=dict(num_classes=200, dropout_ratio=0.8))
 
 # dataset settings
 dataset_type = 'RawframeDataset'
@@ -100,7 +100,7 @@ total_epochs = 150
 
 # runtime settings
 checkpoint_config = dict(interval=5)
-work_dir = './work_dirs/tsn_r50_320p_1x1x8_150e_netballnet_clip_flow/'
+work_dir = './work_dirs/tsn_r50_320p_1x1x8_150e_netballnet_clip_flow_200/'
 load_from = ('https://download.openmmlab.com/mmaction/recognition/tsn/'
              'tsn_r50_320p_1x1x8_110e_kinetics400_flow/'
              'tsn_r50_320p_1x1x8_110e_kinetics400_flow_20200705-1f39486b.pth')
