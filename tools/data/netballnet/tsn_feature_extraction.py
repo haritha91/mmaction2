@@ -80,7 +80,7 @@ def main():
             norm_eval=False),
         cls_head=dict(
             type='TSNHead',
-            num_classes=5,
+            num_classes=200,
             in_channels=2048,
             spatial_type='avg',
             consensus=dict(type='AvgConsensus', dim=1)),
