@@ -86,3 +86,6 @@ total_epochs = 20
 log_config = dict(interval=50, hooks=[dict(type='TextLoggerHook')])
 work_dir = './work_dirs/bmn_400x100_2x8_9e_netballnet_feature'
 output_config = dict(out=f'{work_dir}_results.json', output_format='json')
+
+#use pre-trained model
+load_from = './checkpoints/bmn_400x100_9e_activitynet_feature_20200619-42a3b111.pth'
