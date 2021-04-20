@@ -104,23 +104,23 @@ def parse_args():
     parser.add_argument(
         '--ann-file',
         type=str,
-        default='../../../data/ActivityNet/anet_anno_val.json',
+        default='data/NetballNet/anet_anno_val.json',
         help='name of annotation file')
     parser.add_argument(
         '--activity-index-file',
         type=str,
-        default='../../../data/ActivityNet/anet_activity_indexes_val.txt',
+        default='data/NetballNet/anet_activity_indexes_val.txt',
         help='name of activity index file')
     parser.add_argument(
         '--proposal-file',
         type=str,
-        default='../../../results.json',
+        default='work_dirs/bmn_400x100_2x8_9e_netballnet_feature_results.json',
         help='name of proposal file, which is the'
         'output of proposal generator (BMN)')
     parser.add_argument(
         '--formatted-proposal-file',
         type=str,
-        default='../../../anet_val_formatted_proposal.txt',
+        default='data/NetballNet/nnet_val_formatted_proposal.txt',
         help='name of formatted proposal file, which is the'
         'input of action classifier (SSN)')
     args = parser.parse_args()
@@ -133,7 +133,7 @@ if __name__ == '__main__':
     formatted_proposal_file = open(args.formatted_proposal_file, 'w')
 
     # The activity index file is constructed according to
-    # 'https://github.com/activitynet/ActivityNet/blob/master/Evaluation/eval_classification.py'
+    # 'https://github.com/NetballNet/NetballNet/blob/master/Evaluation/eval_classification.py'
     activity_index, class_idx = {}, 0
     for line in open(args.activity_index_file).readlines():
         activity_index[line.strip()] = class_idx
