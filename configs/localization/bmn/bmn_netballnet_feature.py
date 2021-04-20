@@ -80,7 +80,7 @@ optimizer = dict(
 optimizer_config = dict(grad_clip=None)
 # learning policy
 lr_config = dict(policy='step', step=7)
-total_epochs = 9
+total_epochs = 20
 
 # runtime settings
 log_config = dict(interval=50, hooks=[dict(type='TextLoggerHook')])
