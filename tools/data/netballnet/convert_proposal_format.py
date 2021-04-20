@@ -104,12 +104,12 @@ def parse_args():
     parser.add_argument(
         '--ann-file',
         type=str,
-        default='data/NetballNet/anet_anno_val.json',
+        default='data/NetballNet/nnet_anno_val.json',
         help='name of annotation file')
     parser.add_argument(
         '--activity-index-file',
         type=str,
-        default='data/NetballNet/anet_activity_indexes_val.txt',
+        default='data/NetballNet/nnet_activity_indexes_val.txt',
         help='name of activity index file')
     parser.add_argument(
         '--proposal-file',
