@@ -75,8 +75,10 @@ data = dict(
 evaluation = dict(interval=1, metrics=['AR@AN'])
 
 # optimizer
+# optimizer = dict(
+#     type='Adam', lr=0.001, weight_decay=0.0001)  # this lr is used for 2 gpus
 optimizer = dict(
-    type='Adam', lr=0.001, weight_decay=0.0001)  # this lr is used for 2 gpus
+    type='Adam', lr=0.0001, weight_decay=0.00001)  # smaller lr is used for 2 gpus fine tuning
 optimizer_config = dict(grad_clip=None)
 # learning policy
 lr_config = dict(policy='step', step=7)
