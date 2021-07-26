@@ -2,7 +2,8 @@ from collections.abc import Sequence
 
 from mmcv.utils import build_from_cfg
 
-from ..registry import PIPELINES
+from ..builder import PIPELINES
+from .augmentations import PytorchVideoTrans, TorchvisionTrans
 
 
 @PIPELINES.register_module()
@@ -19,7 +20,14 @@ class Compose:
         self.transforms = []
         for transform in transforms:
             if isinstance(transform, dict):
-                transform = build_from_cfg(transform, PIPELINES)
+                if transform['type'].startswith('torchvision.'):
+                    trans_type = transform.pop('type')[12:]
+                    transform = TorchvisionTrans(trans_type, **transform)
+                elif transform['type'].startswith('pytorchvideo.'):
+                    trans_type = transform.pop('type')[13:]
+                    transform = PytorchVideoTrans(trans_type, **transform)
+                else:
+                    transform = build_from_cfg(transform, PIPELINES)
                 self.transforms.append(transform)
             elif callable(transform):
                 self.transforms.append(transform)

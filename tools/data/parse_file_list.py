@@ -161,9 +161,9 @@ def parse_jester_splits(level):
                 osp.basename(osp.dirname(video)), osp.basename(video))
         if test_mode:
             return video
-        else:
-            label = class_mapping[items[1]]
-            return video, label
+
+        label = class_mapping[items[1]]
+        return video, label
 
     with open(train_file, 'r') as fin:
         train_list = [line_to_map(x) for x in fin]
@@ -210,9 +210,9 @@ def parse_sthv1_splits(level):
                 osp.basename(osp.dirname(video)), osp.basename(video))
         if test_mode:
             return video
-        else:
-            label = class_mapping[items[1]]
-            return video, label
+
+        label = class_mapping[items[1]]
+        return video, label
 
     with open(train_file, 'r') as fin:
         train_list = [line_to_map(x) for x in fin]
@@ -257,11 +257,11 @@ def parse_sthv2_splits(level):
                 osp.basename(osp.dirname(video)), osp.basename(video))
         if test_mode:
             return video
-        else:
-            template = item['template'].replace('[', '')
-            template = template.replace(']', '')
-            label = int(class_mapping[template])
-            return video, label
+
+        template = item['template'].replace('[', '')
+        template = template.replace(']', '')
+        label = int(class_mapping[template])
+        return video, label
 
     with open(train_file, 'r') as fin:
         items = json.loads(fin.read())
@@ -331,8 +331,8 @@ def parse_kinetics_splits(level, dataset):
         """
         if not keep_whitespaces:
             return s.replace('"', '').replace(' ', '_')
-        else:
-            return s.replace('"', '')
+
+        return s.replace('"', '')
 
     def line_to_map(x, test=False):
         """A function to map line string to video and label.
@@ -351,14 +351,14 @@ def parse_kinetics_splits(level, dataset):
             video = f'{x[1]}_{int(float(x[2])):06d}_{int(float(x[3])):06d}'
             label = -1  # label unknown
             return video, label
+
+        video = f'{x[1]}_{int(float(x[2])):06d}_{int(float(x[3])):06d}'
+        if level == 2:
+            video = f'{convert_label(x[0])}/{video}'
         else:
-            video = f'{x[1]}_{int(float(x[2])):06d}_{int(float(x[3])):06d}'
-            if level == 2:
-                video = f'{convert_label(x[0])}/{video}'
-            else:
-                assert level == 1
-            label = class_mapping[convert_label(x[0])]
-            return video, label
+            assert level == 1
+        label = class_mapping[convert_label(x[0])]
+        return video, label
 
     train_file = f'data/{dataset}/annotations/kinetics_train.csv'
     val_file = f'data/{dataset}/annotations/kinetics_val.csv'
@@ -368,7 +368,7 @@ def parse_kinetics_splits(level, dataset):
     # skip the first line
     next(csv_reader)
 
-    labels_sorted = sorted(set([convert_label(row[0]) for row in csv_reader]))
+    labels_sorted = sorted({convert_label(row[0]) for row in csv_reader})
     class_mapping = {label: i for i, label in enumerate(labels_sorted)}
 
     csv_reader = csv.reader(open(train_file))
@@ -430,15 +430,23 @@ def parse_hmdb51_split(level):
 
         class_list = sorted(os.listdir(frame_path))
         class_dict = dict()
-        with open(class_index_file, 'w') as f:
-            content = []
-            for class_id, class_name in enumerate(class_list):
-                # like `ClassInd.txt` in UCF-101, the class_id begins with 1
-                class_dict[class_name] = class_id + 1
-                cur_line = ' '.join([str(class_id + 1), class_name])
-                content.append(cur_line)
-            content = '\n'.join(content)
-            f.write(content)
+        if not osp.exists(class_index_file):
+            with open(class_index_file, 'w') as f:
+                content = []
+                for class_id, class_name in enumerate(class_list):
+                    # like `ClassInd.txt` in UCF-101,
+                    # the class_id begins with 1
+                    class_dict[class_name] = class_id + 1
+                    cur_line = ' '.join([str(class_id + 1), class_name])
+                    content.append(cur_line)
+                content = '\n'.join(content)
+                f.write(content)
+        else:
+            print(f'{class_index_file} has been generated before.')
+            class_dict = {
+                class_name: class_id + 1
+                for class_id, class_name in enumerate(class_list)
+            }
 
         for i in range(1, 4):
             train_content = []
@@ -469,8 +477,7 @@ def parse_hmdb51_split(level):
             with open(test_file_template.format(i), 'w') as fout:
                 fout.write(test_content)
 
-    if not osp.exists(class_index_file):
-        generate_class_index_file()
+    generate_class_index_file()
 
     with open(class_index_file, 'r') as fin:
         class_index = [x.strip().split() for x in fin]
@@ -496,4 +503,32 @@ def parse_hmdb51_split(level):
             test_list = [line_to_map(x) for x in fin]
         splits.append((train_list, test_list))
 
+    return splits
+
+
+def parse_diving48_splits():
+
+    train_file = 'data/diving48/annotations/Diving48_V2_train.json'
+    test_file = 'data/diving48/annotations/Diving48_V2_test.json'
+
+    train = json.load(open(train_file))
+    test = json.load(open(test_file))
+
+    # class_index_file = 'data/diving48/annotations/Diving48_vocab.json'
+    # class_list = json.load(open(class_index_file))
+
+    train_list = []
+    test_list = []
+
+    for item in train:
+        vid_name = item['vid_name']
+        label = item['label']
+        train_list.append((vid_name, label))
+
+    for item in test:
+        vid_name = item['vid_name']
+        label = item['label']
+        test_list.append((vid_name, label))
+
+    splits = ((train_list, test_list), )
     return splits

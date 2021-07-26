@@ -1,6 +1,7 @@
 _base_ = ['../../_base_/models/tsn_r50.py', '../../_base_/default_runtime.py']
 
 # model settings
+# ``in_channels`` should be 2 * clip_len
 model = dict(
     backbone=dict(in_channels=10),
     cls_head=dict(num_classes=200, dropout_ratio=0.8))
@@ -15,7 +16,7 @@ ann_file_test = 'data/ActivityNet/anet_val_clip.txt'
 img_norm_cfg = dict(mean=[128, 128], std=[128, 128], to_bgr=False)
 train_pipeline = [
     dict(type='SampleFrames', clip_len=5, frame_interval=1, num_clips=8),
-    dict(type='FrameSelector'),
+    dict(type='RawFrameDecode'),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='RandomResizedCrop'),
     dict(type='Resize', scale=(224, 224), keep_ratio=False),
@@ -32,10 +33,9 @@ val_pipeline = [
         frame_interval=1,
         num_clips=8,
         test_mode=True),
-    dict(type='FrameSelector'),
+    dict(type='RawFrameDecode'),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='CenterCrop', crop_size=224),
-    dict(type='Flip', flip_ratio=0),
     dict(type='Normalize', **img_norm_cfg),
     dict(type='FormatShape', input_format='NCHW_Flow'),
     dict(type='Collect', keys=['imgs', 'label'], meta_keys=[]),
@@ -48,10 +48,9 @@ test_pipeline = [
         frame_interval=1,
         num_clips=25,
         test_mode=True),
-    dict(type='FrameSelector'),
+    dict(type='RawFrameDecode'),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='TenCrop', crop_size=224),
-    dict(type='Flip', flip_ratio=0),
     dict(type='Normalize', **img_norm_cfg),
     dict(type='FormatShape', input_format='NCHW_Flow'),
     dict(type='Collect', keys=['imgs', 'label'], meta_keys=[]),

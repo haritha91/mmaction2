@@ -44,7 +44,7 @@ extensions = [
 ]
 
 # numpy and torch are required
-autodoc_mock_imports = ['mmaction.version', 'cv2', 'PIL']
+autodoc_mock_imports = ['mmaction.version', 'PIL']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -66,6 +66,8 @@ html_theme = 'sphinx_rtd_theme'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = []
+
+language = 'en'
 
 master_doc = 'index'
 

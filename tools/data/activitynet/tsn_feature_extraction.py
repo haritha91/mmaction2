@@ -60,7 +60,7 @@ def main():
             clip_len=args.clip_len,
             frame_interval=args.frame_interval,
             start_index=0),
-        dict(type='FrameSelector'),
+        dict(type='RawFrameDecode'),
         dict(type='Resize', scale=(-1, 256)),
         dict(type='CenterCrop', crop_size=256),
         dict(type='Normalize', **args.img_norm_cfg),
@@ -102,7 +102,7 @@ def main():
         os.system(f'mkdir -p {args.output_prefix}')
 
     for item in data:
-        frame_dir, length, label = item.split()
+        frame_dir, length, _ = item.split()
         output_file = osp.basename(frame_dir) + '.pkl'
         frame_dir = osp.join(args.data_prefix, frame_dir)
         output_file = osp.join(args.output_prefix, output_file)

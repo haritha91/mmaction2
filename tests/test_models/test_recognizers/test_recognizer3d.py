@@ -37,6 +37,12 @@ def test_i3d():
             for one_img in img_list:
                 recognizer(one_img, gradcam=True)
 
+            # Test forward dummy
+            recognizer.forward_dummy(imgs, softmax=False)
+            res = recognizer.forward_dummy(imgs, softmax=True)[0]
+            assert torch.min(res) >= 0
+            assert torch.max(res) <= 1
+
     else:
         losses = recognizer(imgs, gt_labels)
         assert isinstance(losses, dict)
@@ -51,6 +57,12 @@ def test_i3d():
         recognizer(imgs, gradcam=True)
         for one_img in img_list:
             recognizer(one_img, gradcam=True)
+
+        # Test forward dummy
+        recognizer.forward_dummy(imgs, softmax=False)
+        res = recognizer.forward_dummy(imgs, softmax=True)[0]
+        assert torch.min(res) >= 0
+        assert torch.max(res) <= 1
 
 
 def test_r2plus1d():
@@ -214,7 +226,7 @@ def test_tpn():
 
     recognizer = build_recognizer(config.model)
 
-    input_shape = (1, 8, 3, 1, 224, 224)
+    input_shape = (1, 8, 3, 1, 32, 32)
     demo_inputs = generate_recognizer_demo_inputs(input_shape, '3D')
 
     imgs = demo_inputs['imgs']
@@ -242,6 +254,35 @@ def test_tpn():
             _recognizer.forward = _recognizer.forward_dummy
         for one_img in img_list:
             _recognizer(one_img)
+
+
+def test_timesformer():
+    config = get_recognizer_cfg(
+        'timesformer/timesformer_divST_8x32x1_15e_kinetics400_rgb.py')
+    config.model['backbone']['pretrained'] = None
+    config.model['backbone']['img_size'] = 32
+
+    recognizer = build_recognizer(config.model)
+
+    input_shape = (1, 3, 3, 8, 32, 32)
+    demo_inputs = generate_recognizer_demo_inputs(input_shape, '3D')
+
+    imgs = demo_inputs['imgs']
+    gt_labels = demo_inputs['gt_labels']
+
+    losses = recognizer(imgs, gt_labels)
+    assert isinstance(losses, dict)
+
+    # Test forward test
+    with torch.no_grad():
+        img_list = [img[None, :] for img in imgs]
+        for one_img in img_list:
+            recognizer(one_img, None, return_loss=False)
+
+    # Test forward gradcam
+    recognizer(imgs, gradcam=True)
+    for one_img in img_list:
+        recognizer(one_img, gradcam=True)
 
 
 def test_c3d():

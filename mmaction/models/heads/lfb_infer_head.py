@@ -37,7 +37,7 @@ class LFBInferHead(nn.Module):
                  temporal_pool_type='avg',
                  spatial_pool_type='max'):
         super().__init__()
-        rank, world_size = get_dist_info()
+        rank, _ = get_dist_info()
         if rank == 0:
             if not osp.exists(lfb_prefix_path):
                 print(f'lfb prefix path {lfb_prefix_path} does not exist. '
@@ -68,7 +68,7 @@ class LFBInferHead(nn.Module):
         # LFBInferHead has no parameters to be initialized.
         pass
 
-    def forward(self, x, rois, img_metas):
+    def forward(self, x, rois, img_metas, **kwargs):
         # [N, C, 1, 1, 1]
         features = self.temporal_pool(x)
         features = self.spatial_pool(features)

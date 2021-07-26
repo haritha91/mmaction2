@@ -1,6 +1,8 @@
 import os.path as osp
+import shutil
 import tempfile
 import unittest.mock as mock
+import warnings
 from collections import OrderedDict
 from unittest.mock import MagicMock, patch
 
@@ -11,7 +13,17 @@ from mmcv.runner import EpochBasedRunner, IterBasedRunner
 from mmcv.utils import get_logger
 from torch.utils.data import DataLoader, Dataset
 
-from mmaction.core import DistEvalHook, EvalHook
+# TODO import eval hooks from mmcv and delete them from mmaction2
+try:
+    from mmcv.runner import EvalHook, DistEvalHook
+    pytest.skip(
+        'EvalHook and DistEvalHook are supported in MMCV',
+        allow_module_level=True)
+except ImportError:
+    warnings.warn('DeprecationWarning: EvalHook and DistEvalHook from '
+                  'mmaction2 will be deprecated. Please install mmcv through '
+                  'master branch.')
+    from mmaction.core import DistEvalHook, EvalHook
 
 
 class ExampleDataset(Dataset):
@@ -47,10 +59,12 @@ class Model(nn.Module):
         super().__init__()
         self.linear = nn.Linear(2, 1)
 
-    def forward(self, x, **kwargs):
+    @staticmethod
+    def forward(x, **kwargs):
         return x
 
-    def train_step(self, data_batch, optimizer, **kwargs):
+    @staticmethod
+    def train_step(data_batch, optimizer, **kwargs):
         if not isinstance(data_batch, dict):
             data_batch = dict(x=data_batch)
         return data_batch
@@ -328,3 +342,5 @@ def test_start_param(EvalHookParam, _build_demo_runner, by_epoch):
         runner._iter = 1
     runner.run([dataloader], [('train', 1)], 3)
     assert evalhook.evaluate.call_count == 2  # after epoch 2 & 3
+
+    shutil.rmtree(runner.work_dir)

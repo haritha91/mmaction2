@@ -27,7 +27,7 @@ A pipeline consists of a sequence of operations. Each operation takes a dict as 
 
 We present a typical pipeline in the following figure. The blue blocks are pipeline operations.
 With the pipeline going on, each operator can add new keys (marked as green) to the result dict or update the existing keys (marked as orange).
-![pipeline figure](../imgs/data_pipeline.png)
+![pipeline figure](/resources/data_pipeline.png)
 
 The operations are categorized into data loading, pre-processing and formatting.
 
@@ -63,7 +63,6 @@ val_pipeline = [
     dict(type='RawFrameDecode', io_backend='disk'),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='CenterCrop', crop_size=224),
-    dict(type='Flip', flip_ratio=0),
     dict(type='Normalize', **img_norm_cfg),
     dict(type='FormatShape', input_format='NCHW'),
     dict(type='Collect', keys=['imgs', 'label'], meta_keys=[]),
@@ -79,7 +78,6 @@ test_pipeline = [
     dict(type='RawFrameDecode', io_backend='disk'),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='TenCrop', crop_size=224),
-    dict(type='Flip', flip_ratio=0),
     dict(type='Normalize', **img_norm_cfg),
     dict(type='FormatShape', input_format='NCHW'),
     dict(type='Collect', keys=['imgs', 'label'], meta_keys=[]),
@@ -120,7 +118,7 @@ train_pipeline = [
 ]
 ```
 
-For each operation, we list the related dict fields that are added/updated/removed.
+For each operation, we list the related dict fields that are added/updated/removed below, where `*` means the key may not be affected.
 
 ### Data loading
 
